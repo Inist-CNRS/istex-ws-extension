@@ -3,19 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
-    <openrefine.version>3.9.2</openrefine.version>
+    <openrefine.version>3.9.5</openrefine.version>
     <!-- Change the values below, as well as the groupId & url, to reflect your extension -->
-    <extension.id>istex-ws-extension</extension.id>
     <extension.name>ISTEX TDM Web Services Extension</extension.name>
   </properties>
 
   <groupId>fr.istex.tdm</groupId>
-  <artifactId>${extension.id}</artifactId>
+  <artifactId>istex-ws-extension</artifactId>
   <packaging>jar</packaging>
   <version>0.1.0</version>
 
   <name>${extension.name}</name>
-  <description>${extension.name} for OpenRefine to access ISTEX TDM Web Services</description>
+  <description>${extension.name} for OpenRefine</description>
   <url>https://services.istex.fr/</url>
 
   <build>
