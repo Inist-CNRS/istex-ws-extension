@@ -1,0 +1,18 @@
+<div class="dialog-frame" style="min-width: 700px;">
+    <div class="dialog-border">
+        <div class="dialog-header" bind="dialogHeader">
+        </div>
+        <div class="dialog-body" bind="dialogBody">
+            <select class="dropdown-container" bind="columnaction" id="column-action"></select>
+            <br />
+            <input style="margin-top:2px;" bind="columnNameInput" type="text" id="columnNameInputId" size="40" />
+            <br />
+            <input style="margin-top:2px;" bind="serviceUrlInput" type="text" id="serviceUrlInputId" size="80"
+                placeholder="https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry" />
+        </div>
+        <div class="dialog-footer" bind="dialogFooter">
+            <button class="button button-primary" type="submit" bind="okButton"></button>
+            <button class="button" bind="cancelButton"></button>
+        </div>
+    </div>
+</div>
