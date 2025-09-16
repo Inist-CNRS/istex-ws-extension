@@ -4,6 +4,7 @@
     "istex-ws-extension/enrichment": "TDM Enrichment",
     "tdm-enrichment/service-url": "Service URL",
     "tdm-enrichment/service-url-placeholder": "https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry",
+    "tdm-enrichment/service-url-warning": "Service URL is mandatory",
     "tdm-enrichment/dialog-title": "Column to enrich",
     "tdm-enrichment/col-mode-add": "Add new",
     "tdm-enrichment/col-mode-upd": "Update existing",

@@ -10,7 +10,7 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
 
     const elmts = DOM.bind(frame);
     this._elmts = elmts;
-    const serviceUrl = "";
+    let serviceUrl = "";
 
     elmts.dialogHeader.text($.i18n('tdm-enrichment/dialog-title') + column.name);
     // SEE llm-chatcompletion.js #18
@@ -39,9 +39,15 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
             return;
         }
 
+        serviceUrl = jQueryTrim(elmts.serviceUrlInput.value);
+        if (!serviceUrl.length) {
+            alert($.i18n('tdm-enrichment/service-url-warning'));
+            return;
+        }
+
         let delay = 1;
 
-        Refine.postprocess(
+        Refine.postProcess(
             "istex-ws-extension",
             "add-column-by-enrichment",
             {},
@@ -99,5 +105,6 @@ TDMEnrichmentDialog.prototype._renderForm = function () {
 
     // const container = this._elmts.dialogBody.empty();
     const container = this._elmts.dialogBody;
+    container.serviceUrlInputId.attr('placeholder', _urlPlaceholder);
     const paragraph = $('<p>').appendTo(container);
 };
