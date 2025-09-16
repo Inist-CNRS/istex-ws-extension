@@ -9,9 +9,9 @@ To start your own extension, click the "Use this template" button in the top
 right corner of this page.  
 This will create a copy of this repository, where you can then change:
 
-- [ ] The extension name and description in `module/MOD-INF/module.properties`
-- [ ] The `groupId`, `artifactId`, `name` and `description` fields in `pom.xml`
-- [ ] Edit this `README.md` file to describe your extension to potential users
+- [x] The extension name and description in `module/MOD-INF/module.properties`
+- [x] The `groupId`, `artifactId`, `name` and `description` fields in `pom.xml`
+- [x] Edit this `README.md` file to describe your extension to potential users
   and contributors instead of the sample extension's own instructions
 
 ## Principles
@@ -127,10 +127,10 @@ mvn clean install
 
 ## Configuration
 
-To see that extension within OpenRefine, you need to add the following line to the `extensions` section of your `refine.ini` file:
+To see that extension within OpenRefine, you need to add the following line to the `webapp/WEB-INF/butterfly.properties` (in OpenRefine's directory) file:
 
 ```ini
-extensions=istex-ws-extension
+butterfly.modules.path = ../../istex-ws-extension
 ```
 
 ## References
