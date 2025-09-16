@@ -35,7 +35,7 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
 
         const columnName = jQueryTrim(elmts.columnNameInput[0].value);
         if (!columnName.length) {
-            alert($.i18n('tmd-enrichment/warning-col-name'));
+            alert($.i18n('tdm-enrichment/col-name-warning'));
             return;
         }
 

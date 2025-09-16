@@ -7,5 +7,6 @@
     "tdm-enrichment/dialog-title": "Column to enrich",
     "tdm-enrichment/col-mode-add": "Add new",
     "tdm-enrichment/col-mode-upd": "Update existing",
-    "tmd-enrichment/warning-col-name": "Column name is mandatory"
+    "tdm-enrichment/col-name": "Column name",
+    "tdm-enrichment/col-name-warning": "Column name is mandatory"
 }
