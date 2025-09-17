@@ -1,9 +1,12 @@
 # ISTEX TDM Web Services OpenRefine extension
 
-This repository is based on a scaffold of an OpenRefine extension, which you can use as a basis to write your own.
-See the [guide to writing extensions](https://openrefine.org/docs/technical-reference/writing-extensions) for more information about the process.
+OpenRefine extension to apply [ISTEX TDM Web
+Services](https://services.istex.fr/) on a column of text.  
+It will generate a new column with the result of the query.  
 
-## Principles
+## Development
+
+### Principles
 
 This extension, inspired from
 [llm-extension](https://github.com/sunilnatraj/llm-extension), aims to allow
@@ -102,7 +105,7 @@ In the example above, the user would choose to create a new column with the
 country found in the affiliation address (`country` and `code` fields, as a JSON
 object).
 
-## Compile
+### Compile
 
 To compile and install the extension, run the following command from the root of the project:
 
@@ -114,7 +117,7 @@ mvn clean install
 > [!NOTE]
 > The `maven` and `openjdk-17-jdk` apt packages must be installed.
 
-## Configuration
+### Configuration
 
 To see that extension within OpenRefine, you need to add the following line to the `webapp/WEB-INF/butterfly.properties` (in OpenRefine's directory) file:
 
@@ -122,7 +125,25 @@ To see that extension within OpenRefine, you need to add the following line to t
 butterfly.modules.path = ../../istex-ws-extension
 ```
 
-## References
+### References
 
 - Documentation: <https://openrefine.org/docs/technical-reference/writing-extensions>
 - Example extension: <https://github.com/sunilnatraj/llm-extension>
+
+## Usage
+
+To use this extension, click on a column menu and select "TDM Enrichment".  
+Then, type the name of the column you want to create, and then the URL of the service you want to use.  
+Next, click on OK.
+
+See [ISTEX TDM](https://services.istex.fr) for more information about the available services.  
+
+> [!TIP]
+> Only use non-asynchronous services (services working on a single text).
+
+## Install this extension in OpenRefine
+
+Download the .zip file of the [latest release of this extension](https://github.com/Inist-CNRS/istex-ws-extension/releases).  
+Unzip this file and place the unzipped folder in your OpenRefine extensions folder. [Read more about installing extensions in OpenRefine's user manual](https://docs.openrefine.org/manual/installing#installing-extensions).  
+
+When this extension is installed correctly, when you open a project you will see in the Extensions bar TDM menu.
