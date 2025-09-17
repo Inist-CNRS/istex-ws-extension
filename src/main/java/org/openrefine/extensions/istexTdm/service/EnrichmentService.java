@@ -46,7 +46,7 @@ public class EnrichmentService {
             // Create HTTP request
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(serviceUrl))
-                    .timeout(Duration.ofSeconds(60)) // Set timeout for the request
+                    .timeout(Duration.ofSeconds(120)) // Set timeout for the request
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload))
                     .build();
@@ -61,7 +61,8 @@ public class EnrichmentService {
                 List<Serializable> responses = new ArrayList<>();
                 if (responseJson.isArray()) {
                     for (JsonNode node : responseJson) {
-                        // Assuming the response is an array of objects, and each object has a "value" field with the result.
+                        // Assuming the response is an array of objects, and each object has a "value"
+                        // field with the result.
                         // This might need adjustment based on the actual API response structure.
                         if (node.has("value")) {
                             responses.add(node.get("value").toString());
@@ -75,24 +76,24 @@ public class EnrichmentService {
             } else {
                 logger.error("EnrichmentService request failure - {} {}", responseCode, response.body());
                 responseMessage = MessageFormat.format(
-                        "LLM request failed. Status Code : {0,number,integer}. Message : {1}", responseCode,
+                        "ISTEX TDM request failed. Status Code : {0,number,integer}. Message : {1}", responseCode,
                         response.body());
             }
         } catch (InterruptedException e) {
             logger.error("EnrichmentService error InterruptedException - {}", e.getMessage());
-            responseMessage = MessageFormat.format("LLM request failed. Message : InterruptedException {0}",
+            responseMessage = MessageFormat.format("ISTEX TDM request failed. Message : InterruptedException {0}",
                     e.getMessage());
         } catch (SecurityException e) {
             logger.error("EnrichmentService error SecurityException - {}", e.getMessage());
-            responseMessage = MessageFormat.format("LLM request failed. Message : SecurityException {0}",
+            responseMessage = MessageFormat.format("ISTEX TDM request failed. Message : SecurityException {0}",
                     e.getMessage());
         } catch (IllegalArgumentException e) {
             logger.error("EnrichmentService error IllegalArgumentException - {}", e.getMessage());
-            responseMessage = MessageFormat.format("LLM request failed. Message : IllegalArgumentException {0}",
+            responseMessage = MessageFormat.format("ISTEX TDM request failed. Message : IllegalArgumentException {0}",
                     e.getMessage());
         } catch (Exception e) {
             logger.error("EnrichmentService error Exception - {}", e.getMessage());
-            responseMessage = MessageFormat.format("LLM request failed. Message : Exception {0}", e.getMessage());
+            responseMessage = MessageFormat.format("ISTEX TDM request failed. Message : Exception {0}", e.getMessage());
         }
 
         throw new Exception(responseMessage);
