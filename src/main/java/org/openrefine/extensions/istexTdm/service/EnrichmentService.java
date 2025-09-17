@@ -45,8 +45,8 @@ public class EnrichmentService {
             TdmRequest payloadObject;
             payloadObject = new TdmRequest(userContent);
 
-            String payload = objectMapper.writeValueAsString(payloadObject);
-            logger.info("chatCompletion - invoke - payload: {}", payload);
+            String payload = objectMapper.writeValueAsString(List.of(payloadObject));
+            logger.info("EnrichmentService - invoke - payload: {}", payload);
 
             // Create HTTP request
             HttpRequest request = HttpRequest.newBuilder()

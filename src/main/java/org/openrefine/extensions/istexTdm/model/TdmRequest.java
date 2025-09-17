@@ -14,13 +14,12 @@ public class TdmRequest {
     private String model;
     private List<Message> messages;
     private ResponseFormat response_format;
-    private int max_tokens;
-    private double temperature;
     private Double top_p;
     private Integer seed;
 
     public TdmRequest(String value) {
         this.id = Integer.toString(_id++);
+        this.value = value;
     }
 
     public TdmRequest(String id, String value) {
@@ -28,28 +27,13 @@ public class TdmRequest {
         this.value = value;
     }
 
-    // public TdmRequest(String model, ResponseFormat responseFormat, List<Message>
-    // messages, int maxTokens,
-    // double temperature, Double top_p, Integer seed) {
-    // this.model = model;
-    // this.response_format = responseFormat;
-    // this.messages = messages;
-    // this.max_tokens = maxTokens;
-    // this.temperature = temperature;
-    // this.top_p = top_p;
-    // this.seed = seed;
-    // }
+    public String getId() {
+        return id;
+    }
 
-    // public TdmRequest(String model, ResponseFormat responseFormat, List<Message>
-    // messages, int maxTokens,
-    // double temperature, Double top_p) {
-    // this.model = model;
-    // this.response_format = responseFormat;
-    // this.messages = messages;
-    // this.max_tokens = maxTokens;
-    // this.temperature = temperature;
-    // this.top_p = top_p;
-    // }
+    public String getValue() {
+        return value;
+    }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ResponseFormat {
@@ -139,22 +123,6 @@ public class TdmRequest {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public int getMax_tokens() {
-        return max_tokens;
-    }
-
-    public void setMax_tokens(int max_tokens) {
-        this.max_tokens = max_tokens;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
     }
 
     public ResponseFormat getResponse_format() {

@@ -39,7 +39,7 @@ var ClientSideResourceManager = Packages.com.google.refine.ClientSideResourceMan
 function registerCommands() {
   // Here you can register server-side commands
   const RS = Packages.com.google.refine.RefineServlet;
-  RS.registerCommand(module, "add-column-by-enrichment", Packages.org.openrefine.extension.istexTdm.cmd.AddColumnByEnrichmentCommand);
+    RS.registerCommand(module, "add-column-by-enrichment", new Packages.org.openrefine.extensions.istexTdm.cmd.AddColumnByEnrichmentCommand());
 }
 
 /*
