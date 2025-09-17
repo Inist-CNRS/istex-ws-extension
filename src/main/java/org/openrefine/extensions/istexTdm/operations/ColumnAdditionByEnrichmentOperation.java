@@ -171,7 +171,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             }
 
             List<Serializable> allResponses = new ArrayList<>();
-            int batchSize = 100;
+            int batchSize = 10;
 
             for (int i = 0; i < count; i += batchSize) {
                 if (_canceled) {
@@ -275,7 +275,6 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             }.init(cellsAtRows);
         }
 
-        
     }
 
 }
