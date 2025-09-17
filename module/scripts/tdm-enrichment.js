@@ -59,23 +59,10 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
                 delay: delay,
                 serviceUrl: serviceUrl
             },
-            { includeEngine: true, modelsChanged: true, cellsChanged: true, columnStatsChanged: true, rowIdsPreserved: true, recordIdsPreserved: true },
-            {
-                onDone: function () {
-                    Refine.postProcess(
-                        "istex-ws-extension",
-                        "llm-prompt", // TODO
-                        {},
-                        {
-                            operation: "add",
-                            projectId: theProject.id,
-                            serviceUrl: serviceUrl
-                        }
-                    );
-                    dismiss();
-                }
-            }
+            { includeEngine: true, modelsChanged: true, cellsChanged: true, columnStatsChanged: true, rowIdsPreserved: true, recordIdsPreserved: true }
         );
+
+        dismiss();
     });
 
     this.initTabs();

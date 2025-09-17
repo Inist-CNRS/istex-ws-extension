@@ -7,6 +7,8 @@ import org.openrefine.extensions.istexTdm.model.TdmRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.*;
@@ -35,17 +37,10 @@ public class EnrichmentService {
             .connectTimeout(Duration.ofSeconds(30)) // Set connection timeout
             .build();
 
-    public static String invoke(String serviceUrl, String userContent) throws Exception {
+    public static List<Serializable> invoke(String serviceUrl, List<TdmRequest> tdmRequests) throws Exception {
         String responseMessage;
         try {
-            // Prepare request payload
-            List<TdmRequest.Message> messages = new ArrayList<>();
-            messages.add(new TdmRequest.Message("value", userContent));
-
-            TdmRequest payloadObject;
-            payloadObject = new TdmRequest(userContent);
-
-            String payload = objectMapper.writeValueAsString(List.of(payloadObject));
+            String payload = objectMapper.writeValueAsString(tdmRequests);
             logger.info("EnrichmentService - invoke - payload: {}", payload);
 
             // Create HTTP request
@@ -53,20 +48,30 @@ public class EnrichmentService {
                     .uri(URI.create(serviceUrl))
                     .timeout(Duration.ofSeconds(60)) // Set timeout for the request
                     .header("Content-Type", "application/json")
-                    // .header("Authorization", "Bearer " + llmConfig.getApiKey())
                     .POST(HttpRequest.BodyPublishers.ofString(payload))
                     .build();
 
             // Send request and get response
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            logger.info("EnrichmentService raw response: {}", response.body());
 
             int responseCode = response.statusCode();
             if (responseCode == 200) {
                 JsonNode responseJson = objectMapper.readTree(response.body());
-                String content = responseJson
-                        .at("/choices/0/message/content")
-                        .asText();
-                return content.replace("<|end_of_turn|>", "");
+                List<Serializable> responses = new ArrayList<>();
+                if (responseJson.isArray()) {
+                    for (JsonNode node : responseJson) {
+                        // Assuming the response is an array of objects, and each object has a "value" field with the result.
+                        // This might need adjustment based on the actual API response structure.
+                        if (node.has("value")) {
+                            responses.add(node.get("value").toString());
+                        } else {
+                            // Fallback or error handling if 'value' field is not found
+                            responses.add("Error: 'value' field not found in response item.");
+                        }
+                    }
+                }
+                return responses;
             } else {
                 logger.error("EnrichmentService request failure - {} {}", responseCode, response.body());
                 responseMessage = MessageFormat.format(
@@ -96,13 +101,15 @@ public class EnrichmentService {
     public static String test() {
         String serviceUrl = "https://terms-extraction.services.istex.fr/v2/teeft/en";
         String userContent = "The diets of the most conspicuous reef‐fish species from northern Patagonia, the carnivorous species Pseudopercis semifasciata, Acanthistius patachonicus, Pinguipes brasilianus and Sebastes oculatus were studied. Pinguipes brasilianus had the narrowest diet and most specialized feeding strategy, preying mostly on reef‐dwelling organisms such as sea urchins, limpets, bivalves, crabs and polychaetes. The diet of A. patachonicus was characterized by the presence of reef and soft‐bottom benthic organisms, mainly polychaetes, crabs and fishes. Pseudopercis semifasciata showed the broadest spectrum of prey items, preying upon reef, soft‐bottom and transient organism (mainly fishes, cephalopods and crabs). All S. oculatus guts were empty, but stable‐isotope analyses suggested that this species consumed small fishes and crabs. In general, P. brasilianus depended on local prey populations and ate different reef‐dwelling prey than the other species. Pseudopercis semifasciata, A. patachonicus and probably S. oculatus, however, had overlapping trophic niches and consumed resources from adjacent environments. The latter probably reduces the importance of food as a limiting resource for these reef‐fish populations, facilitating their coexistence in spite of their high trophic overlap.";
-        String tdmResponse;
+        List<Serializable> tdmResponse;
         try {
-            tdmResponse = invoke(serviceUrl, userContent);
+            List<TdmRequest> requests = new ArrayList<>();
+            requests.add(new TdmRequest(userContent));
+            tdmResponse = invoke(serviceUrl, requests);
+            return tdmResponse.get(0).toString();
         } catch (Exception e) {
-            tdmResponse = e.getMessage();
+            return e.getMessage();
         }
-        return tdmResponse;
     }
 
 }

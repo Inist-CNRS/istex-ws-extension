@@ -18,6 +18,7 @@ import com.google.refine.operations.EngineDependentOperation;
 import com.google.refine.process.LongRunningProcess;
 import com.google.refine.process.Process;
 import org.apache.commons.lang.Validate;
+import org.openrefine.extensions.istexTdm.model.TdmRequest;
 import org.openrefine.extensions.istexTdm.service.EnrichmentService;
 
 import java.io.Serializable;
@@ -162,45 +163,57 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             int count = dataRows.size();
             List<CellAtRow> responseBodies = new ArrayList<CellAtRow>(count);
             Change columnDataChange = null;
-            int i = 0;
+
+            List<TdmRequest> allRequests = new ArrayList<>(count);
             for (CellAtRow rowData : dataRows) {
                 String userData = rowData.cell.value.toString();
+                allRequests.add(new TdmRequest(userData));
+            }
 
-                Serializable response = null;
-                response = fetch(userData);
-                if (response != null) {
-                    CellAtRow cellAtRow = new CellAtRow(
-                            rowData.row,
-                            new Cell(response, null));
+            List<Serializable> allResponses = new ArrayList<>();
+            int batchSize = 100;
 
-                    responseBodies.add(cellAtRow);
-                }
-                _progress = i++ * 100 / count;
+            for (int i = 0; i < count; i += batchSize) {
                 if (_canceled) {
                     break;
                 }
-                // if (_llmConfiguration.getWaitTime() > 0) {
-                // try {
-                // Thread.sleep(_llmConfiguration.getWaitTime());
-                // } catch (InterruptedException e) {
-                // // do nothing
-                // }
-                // }
+                List<TdmRequest> batch = allRequests.subList(i, Math.min(i + batchSize, count));
+                try {
+                    List<Serializable> batchResponses = EnrichmentService.invoke(_serviceUrl, batch);
+                    allResponses.addAll(batchResponses);
+                } catch (Exception e) {
+                    // Handle exception for the batch
+                    // For simplicity, we can add error messages for each request in the batch
+                    for (int j = 0; j < batch.size(); j++) {
+                        allResponses.add("Error: " + e.getMessage());
+                    }
+                }
+                _progress = (i + batch.size()) * 100 / count;
             }
 
             if (!_canceled) {
+                for (int i = 0; i < count; i++) {
+                    CellAtRow rowData = dataRows.get(i);
+                    Serializable response = allResponses.get(i);
+                    if (response != null) {
+                        CellAtRow cellAtRow = new CellAtRow(
+                                rowData.row,
+                                new Cell(response, null));
+                        responseBodies.add(cellAtRow);
+                    }
+                }
+
                 if (_columnAction.equals("update")) {
                     Column resultsColumn = _project.columnModel.getColumnByName(_newColumnName);
                     int resultsCellIndex = resultsColumn != null ? resultsColumn.getCellIndex() : -1;
-                    // column already exists, we overwrite cells where we made edits
-                    CellChange[] cellChanges = new CellChange[count];
-                    i = 0;
+                    CellChange[] cellChanges = new CellChange[responseBodies.size()];
+                    int k = 0;
                     for (CellAtRow dataCell : responseBodies) {
                         int rowId = dataCell.row;
                         Cell oldCell = _project.rows.get(rowId).getCell(resultsCellIndex);
-                        cellChanges[i] = new CellChange(rowId, resultsCellIndex,
+                        cellChanges[k] = new CellChange(rowId, resultsCellIndex,
                                 oldCell, dataCell.cell);
-                        i++;
+                        k++;
                     }
                     columnDataChange = new MassCellChange(cellChanges, _newColumnName, false);
                 } else {
@@ -262,13 +275,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             }.init(cellsAtRows);
         }
 
-        Serializable fetch(String userContent) {
-            try {
-                return EnrichmentService.invoke(_serviceUrl, userContent);
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-        }
+        
     }
 
 }
