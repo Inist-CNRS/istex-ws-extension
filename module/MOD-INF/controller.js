@@ -36,10 +36,18 @@ var html = "text/html";
 var encoding = "UTF-8";
 var ClientSideResourceManager = Packages.com.google.refine.ClientSideResourceManager;
 
+function registerCommands() {
+  // Here you can register server-side commands
+  const RS = Packages.com.google.refine.RefineServlet;
+  RS.registerCommand(module, "add-column-by-enrichment", Packages.org.openrefine.extension.istexTdm.cmd.AddColumnByEnrichmentCommand);
+}
+
 /*
  * Function invoked to initialize the extension.
  */
 function init() {
+
+  registerCommands();
 
   // Script files to inject into /project page
   ClientSideResourceManager.addPaths(

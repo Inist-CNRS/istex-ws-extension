@@ -39,7 +39,7 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
             return;
         }
 
-        serviceUrl = jQueryTrim(elmts.serviceUrlInput.value);
+        serviceUrl = jQueryTrim(elmts.serviceUrlInput.val());
         if (!serviceUrl.length) {
             alert($.i18n('tdm-enrichment/service-url-warning'));
             return;
@@ -52,9 +52,10 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
             "add-column-by-enrichment",
             {},
             {
-                columnName: columnName,
+                baseColumnName: column.name,
                 columnAction: columnAction,
-                columnIndex: columnIndex,
+                newColumnName: columnName,
+                columnInsertIndex: columnIndex + 1,
                 delay: delay,
                 serviceUrl: serviceUrl
             },
@@ -105,6 +106,6 @@ TDMEnrichmentDialog.prototype._renderForm = function () {
 
     // const container = this._elmts.dialogBody.empty();
     const container = this._elmts.dialogBody;
-    container.serviceUrlInputId.attr('placeholder', _urlPlaceholder);
-    const paragraph = $('<p>').appendTo(container);
+    // container.serviceUrlInputId.attr('placeholder', _urlPlaceholder);
+    // const paragraph = $('<p>').appendTo(container);
 };
