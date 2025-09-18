@@ -35,11 +35,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var html = "text/html";
 var encoding = "UTF-8";
 var ClientSideResourceManager = Packages.com.google.refine.ClientSideResourceManager;
+var OperationRegistry = Packages.com.google.refine.operations.OperationRegistry;
+
+function registerOperations() {
+  // Here you can register server-side operations
+  OperationRegistry.registerOperation(
+    module,
+    "add-column-by-enrichment",
+    Packages.org.openrefine.extensions.istexTdm.operations.ColumnAdditionByEnrichmentOperation
+  );
+}
 
 function registerCommands() {
   // Here you can register server-side commands
   const RS = Packages.com.google.refine.RefineServlet;
-    RS.registerCommand(module, "add-column-by-enrichment", new Packages.org.openrefine.extensions.istexTdm.cmd.AddColumnByEnrichmentCommand());
+  RS.registerCommand(module, "add-column-by-enrichment", new Packages.org.openrefine.extensions.istexTdm.cmd.AddColumnByEnrichmentCommand());
 }
 
 /*
@@ -47,6 +57,7 @@ function registerCommands() {
  */
 function init() {
 
+  registerOperations();
   registerCommands();
 
   // Script files to inject into /project page
