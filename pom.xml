@@ -11,7 +11,7 @@
   <groupId>fr.istex.tdm</groupId>
   <artifactId>istex-ws-extension</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 
   <name>${extension.name}</name>
   <description>${extension.name} for OpenRefine</description>
