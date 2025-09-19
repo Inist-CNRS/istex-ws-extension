@@ -1,0 +1,13 @@
+{
+    "istex-ws-extension/menu-label": "TDM",
+    "istex-ws-extension/manage-ws": "Gestion des services web de TDM",
+    "istex-ws-extension/enrichment": "Enrichissement TDM",
+    "tdm-enrichment/service-url": "URL du service",
+    "tdm-enrichment/service-url-placeholder": "https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry",
+    "tdm-enrichment/service-url-warning": "L'URL du service est obligatoire",
+    "tdm-enrichment/dialog-title": "Colonne à enrichir",
+    "tdm-enrichment/col-mode-add": "Ajouter une colonne",
+    "tdm-enrichment/col-mode-upd": "Mettre à jour une colonne",
+    "tdm-enrichment/col-name": "Nom de la colonne",
+    "tdm-enrichment/col-name-warning": "Le nom de la colonne est obligatoire"
+}
