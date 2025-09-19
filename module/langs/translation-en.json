@@ -9,5 +9,8 @@
     "tdm-enrichment/col-mode-add": "Add new",
     "tdm-enrichment/col-mode-upd": "Update existing",
     "tdm-enrichment/col-name": "Column name",
-    "tdm-enrichment/col-name-warning": "Column name is mandatory"
+    "tdm-enrichment/col-name-warning": "Column name is mandatory",
+    "istex-tdm-extension/about-header": "About TDM Enrichment",
+    "istex-tdm-extension/about-content": "TDM Enrichment is a module that allows you to enrich your data with TDM web services.",
+    "istex-tdm-extension/close-button": "Close"
 }

@@ -9,7 +9,7 @@ ExtensionBar.MenuItems.push({
       id: "istex-ws-extension/configuration",
       label: $.i18n('istex-ws-extension/manage-ws'),
       click: function () {
-        new ManageLLMSettingsUI();
+        new AboutTDM();
       }
     }
   ]

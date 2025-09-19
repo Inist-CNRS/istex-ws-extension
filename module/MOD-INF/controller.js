@@ -65,9 +65,9 @@ function init() {
     "project/scripts",
     module,
     [
+      "scripts/dialogs/about-tdm.js",
       "scripts/menu.js",
       "scripts/tdm-enrichment.js"
-      // "scripts/project-injection.js"
     ]
   );
 
@@ -76,7 +76,8 @@ function init() {
     "project/styles",
     module,
     [
-      "styles/project-injection.css"
+      "styles/project-injection.css",
+      "styles/about-tdm.css"
     ]
   );
 

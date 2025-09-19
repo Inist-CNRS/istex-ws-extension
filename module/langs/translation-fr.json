@@ -9,5 +9,8 @@
     "tdm-enrichment/col-mode-add": "Ajouter une colonne",
     "tdm-enrichment/col-mode-upd": "Mettre à jour une colonne",
     "tdm-enrichment/col-name": "Nom de la colonne",
-    "tdm-enrichment/col-name-warning": "Le nom de la colonne est obligatoire"
+    "tdm-enrichment/col-name-warning": "Le nom de la colonne est obligatoire",
+    "istex-tdm-extension/about-header": "À propos des enrichissements TDM",
+    "istex-tdm-extension/about-content": "Les enrichissements TDM permettent d'ajouter des informations à partir de services web externes.",
+    "istex-tdm-extension/close-button": "Fermer"
 }
