@@ -12,6 +12,9 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
     this._elmts = elmts;
     let serviceUrl = "";
 
+    elmts.columnNameLabel.text($.i18n('tdm-enrichment/column-name-label'));
+    elmts.serviceUrlLabel.text($.i18n('tdm-enrichment/service-url-label'));
+
     elmts.dialogHeader.text($.i18n('tdm-enrichment/dialog-title') + column.name);
     // SEE llm-chatcompletion.js #18
 

@@ -4,11 +4,15 @@
         </div>
         <div class="dialog-body" bind="dialogBody">
             <select class="dropdown-container" bind="columnaction" id="column-action"></select>
-            <br />
-            <input style="margin-top:2px;" bind="columnNameInput" type="text" id="columnNameInputId" size="40" />
-            <br />
-            <input style="margin-top:2px;" bind="serviceUrlInput" type="text" id="serviceUrlInputId" size="80"
-                placeholder="https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry" />
+            <div style="margin-top: 10px;">
+                <label for="columnNameInputId" bind="columnNameLabel"></label><br/>
+                <input style="margin-top:2px;" bind="columnNameInput" type="text" id="columnNameInputId" size="40" />
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="serviceUrlInputId" bind="serviceUrlLabel"></label><br/>
+                <input style="margin-top:2px;" bind="serviceUrlInput" type="text" id="serviceUrlInputId" size="80"
+                    placeholder="https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry" />
+            </div>
         </div>
         <div class="dialog-footer" bind="dialogFooter">
             <button class="button button-primary" type="submit" bind="okButton"></button>
