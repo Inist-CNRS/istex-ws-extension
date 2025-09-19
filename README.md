@@ -125,6 +125,19 @@ To see that extension within OpenRefine, you need to add the following line to t
 butterfly.modules.path = ../../istex-ws-extension
 ```
 
+### New version
+
+Until it's done in CI, to create a new version, modify the `pom.xml` file to
+change the version number, then run the following command from the root of the
+project:
+
+```bash
+mvn clean install
+```
+
+Next, create a new release on GitHub, and upload the
+`target/istex-ws-extension-<version>.zip` file.
+
 ### References
 
 - Documentation: <https://openrefine.org/docs/technical-reference/writing-extensions>
