@@ -36,6 +36,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
     final protected int _columnInsertIndex;
     final protected int _delay;
     final protected String _serviceUrl;
+    final protected int _batchSize;
 
     @JsonCreator
     public ColumnAdditionByEnrichmentOperation(
@@ -45,7 +46,8 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             @JsonProperty("newColumnName") String newColumnName,
             @JsonProperty("columnInsertIndex") int columnInsertIndex,
             @JsonProperty("delay") int delay,
-            @JsonProperty("serviceUrl") String serviceUrl) {
+            @JsonProperty("serviceUrl") String serviceUrl,
+            @JsonProperty("batchSize") int batchSize) {
         super(engineConfig);
 
         _baseColumnName = baseColumnName;
@@ -54,6 +56,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
         _columnInsertIndex = columnInsertIndex;
         _delay = delay;
         _serviceUrl = serviceUrl;
+        _batchSize = batchSize;
     }
 
     public void validate() {
@@ -111,7 +114,8 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
         return new ColumnAdditionByEnrichmentProcess(
                 project,
                 engine,
-                getBriefDescription(null));
+                getBriefDescription(null),
+                _batchSize);
     }
 
     public class ColumnAdditionByEnrichmentProcess extends LongRunningProcess implements Runnable {
@@ -119,17 +123,18 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
         final protected Project _project;
         final protected Engine _engine;
         final protected long _historyEntryID;
-        // final protected LLMConfiguration _llmConfiguration;
+        final protected int _batchSize;
 
         public ColumnAdditionByEnrichmentProcess(
                 Project project,
                 Engine engine,
-                String description) {
+                String description,
+                int batchSize) {
             super(description);
             _project = project;
             _engine = engine;
             _historyEntryID = HistoryEntry.allocateID();
-            // _llmConfiguration = LLMUtils.getLLMProvider(_providerLabel);
+            _batchSize = batchSize;
         }
 
         @Override
@@ -171,7 +176,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             }
 
             List<Serializable> allResponses = new ArrayList<>();
-            int batchSize = 10;
+            int batchSize = _batchSize;
 
             for (int i = 0; i < count; i += batchSize) {
                 if (_canceled) {

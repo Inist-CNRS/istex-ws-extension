@@ -5,13 +5,18 @@
         <div class="dialog-body" bind="dialogBody">
             <select class="dropdown-container" bind="columnaction" id="column-action"></select>
             <div style="margin-top: 10px;">
-                <label for="columnNameInputId" bind="columnNameLabel"></label><br/>
+                <label for="columnNameInputId" bind="columnNameLabel"></label><br />
                 <input style="margin-top:2px;" bind="columnNameInput" type="text" id="columnNameInputId" size="40" />
             </div>
             <div style="margin-top: 10px;">
-                <label for="serviceUrlInputId" bind="serviceUrlLabel"></label><br/>
+                <label for="serviceUrlInputId" bind="serviceUrlLabel"></label><br />
                 <input style="margin-top:2px;" bind="serviceUrlInput" type="text" id="serviceUrlInputId" size="80"
                     placeholder="https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry" />
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="batchSizeInputId" bind="batchSizeLabel"></label><br />
+                <input style="margin-top:2px;" bind="batchSizeInput" type="number" id="batchSizeInputId" value="10"
+                    min="1" />
             </div>
         </div>
         <div class="dialog-footer" bind="dialogFooter">

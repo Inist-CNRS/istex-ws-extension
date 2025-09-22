@@ -12,6 +12,7 @@
     "tdm-enrichment/column-name-label": "Nom de la colonne",
     "tdm-enrichment/dialog-title": "Enrichissement TDM pour la colonne ",
     "tdm-enrichment/service-url-label": "URL du service",
+    "tdm-enrichment/batch-size-label": "Taille des lots",
     "tdm-enrichment/service-url-placeholder": "https://address-kit.services.istex.fr/v1/affiliationcountry/affilcountry",
     "tdm-enrichment/service-url-warning": "Veuillez fournir l'URL du service.",
     "tdm-enrichment/service-url": "URL du service"
