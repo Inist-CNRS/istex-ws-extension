@@ -1,6 +1,5 @@
 package org.openrefine.extensions.istexTdm.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openrefine.extensions.istexTdm.model.TdmRequest;
@@ -9,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -19,7 +16,6 @@ import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class EnrichmentService {
     private static final Logger logger = LoggerFactory.getLogger("EnrichmentService");
@@ -37,7 +33,8 @@ public class EnrichmentService {
             .connectTimeout(Duration.ofSeconds(30)) // Set connection timeout
             .build();
 
-    public static List<Serializable> invoke(String serviceUrl, List<TdmRequest> tdmRequests, int timeout) throws Exception {
+    public static List<Serializable> invoke(String serviceUrl, List<TdmRequest> tdmRequests, int timeout)
+            throws Exception {
         String responseMessage;
         try {
             String payload = objectMapper.writeValueAsString(tdmRequests);
