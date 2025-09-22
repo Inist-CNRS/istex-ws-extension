@@ -37,6 +37,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
     final protected int _delay;
     final protected String _serviceUrl;
     final protected int _batchSize;
+    final protected int _timeout;
 
     @JsonCreator
     public ColumnAdditionByEnrichmentOperation(
@@ -47,7 +48,8 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
             @JsonProperty("columnInsertIndex") int columnInsertIndex,
             @JsonProperty("delay") int delay,
             @JsonProperty("serviceUrl") String serviceUrl,
-            @JsonProperty("batchSize") int batchSize) {
+            @JsonProperty("batchSize") int batchSize,
+            @JsonProperty("timeout") int timeout) {
         super(engineConfig);
 
         _baseColumnName = baseColumnName;
@@ -57,6 +59,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
         _delay = delay;
         _serviceUrl = serviceUrl;
         _batchSize = batchSize;
+        _timeout = timeout;
     }
 
     public void validate() {
@@ -115,7 +118,8 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
                 project,
                 engine,
                 getBriefDescription(null),
-                _batchSize);
+                _batchSize,
+                _timeout);
     }
 
     public class ColumnAdditionByEnrichmentProcess extends LongRunningProcess implements Runnable {
@@ -124,17 +128,20 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
         final protected Engine _engine;
         final protected long _historyEntryID;
         final protected int _batchSize;
+        final protected int _timeout;
 
         public ColumnAdditionByEnrichmentProcess(
                 Project project,
                 Engine engine,
                 String description,
-                int batchSize) {
+                int batchSize,
+                int timeout) {
             super(description);
             _project = project;
             _engine = engine;
             _historyEntryID = HistoryEntry.allocateID();
             _batchSize = batchSize;
+            _timeout = timeout;
         }
 
         @Override
@@ -184,7 +191,7 @@ public class ColumnAdditionByEnrichmentOperation extends EngineDependentOperatio
                 }
                 List<TdmRequest> batch = allRequests.subList(i, Math.min(i + batchSize, count));
                 try {
-                    List<Serializable> batchResponses = EnrichmentService.invoke(_serviceUrl, batch);
+                    List<Serializable> batchResponses = EnrichmentService.invoke(_serviceUrl, batch, _timeout);
                     allResponses.addAll(batchResponses);
                 } catch (Exception e) {
                     // Handle exception for the batch

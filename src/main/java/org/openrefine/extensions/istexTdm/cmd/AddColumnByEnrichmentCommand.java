@@ -20,16 +20,17 @@ public class AddColumnByEnrichmentCommand extends EngineDependentCommand {
         int columnInsertIndex = Integer.parseInt(request.getParameter("columnInsertIndex"));
         int delay = Integer.parseInt(request.getParameter("delay"));
         String serviceUrl = request.getParameter("serviceUrl");
-        int batchSize = Integer.parseInt(request.getParameter("batchSize"));
-
-        return new ColumnAdditionByEnrichmentOperation(
-                engineConfig,
-                baseColumnName,
-                columnAction,
-                newColumnName,
-                columnInsertIndex,
-                delay,
-                serviceUrl,
-                batchSize);
-    }
+                    int batchSize = Integer.parseInt(request.getParameter("batchSize"));
+                    int timeout = Integer.parseInt(request.getParameter("timeout"));
+        
+                    return new ColumnAdditionByEnrichmentOperation(
+                            engineConfig,
+                            baseColumnName,
+                            columnAction,
+                            newColumnName,
+                            columnInsertIndex,
+                            delay,
+                            serviceUrl,
+                            batchSize,
+                            timeout);    }
 }

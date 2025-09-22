@@ -18,6 +18,11 @@
                 <input style="margin-top:2px;" bind="batchSizeInput" type="number" id="batchSizeInputId" value="10"
                     min="1" />
             </div>
+            <div style="margin-top: 10px;">
+                <label for="timeoutInputId" bind="timeoutLabel"></label><br />
+                <input style="margin-top:2px;" bind="timeoutInput" type="number" id="timeoutInputId" value="120"
+                    min="1" />
+            </div>
         </div>
         <div class="dialog-footer" bind="dialogFooter">
             <button class="button button-primary" type="submit" bind="okButton"></button>

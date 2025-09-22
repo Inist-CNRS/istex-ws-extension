@@ -8,6 +8,7 @@
     "tdm-enrichment/column-name-label": "Column name",
     "tdm-enrichment/service-url-label": "Service URL",
     "tdm-enrichment/batch-size-label": "Batch size",
+    "tdm-enrichment/timeout-label": "Timeout (seconds)",
     "tdm-enrichment/dialog-title": "Column to enrich",
     "tdm-enrichment/col-mode-add": "Add new",
     "tdm-enrichment/col-mode-upd": "Update existing",

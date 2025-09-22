@@ -37,16 +37,16 @@ public class EnrichmentService {
             .connectTimeout(Duration.ofSeconds(30)) // Set connection timeout
             .build();
 
-    public static List<Serializable> invoke(String serviceUrl, List<TdmRequest> tdmRequests) throws Exception {
+    public static List<Serializable> invoke(String serviceUrl, List<TdmRequest> tdmRequests, int timeout) throws Exception {
         String responseMessage;
         try {
             String payload = objectMapper.writeValueAsString(tdmRequests);
-            logger.info("EnrichmentService - invoke - payload: {}", payload);
+            // logger.info("EnrichmentService - invoke - payload: {}", payload);
 
             // Create HTTP request
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(serviceUrl))
-                    .timeout(Duration.ofSeconds(120)) // Set timeout for the request
+                    .timeout(Duration.ofSeconds(timeout)) // Set timeout for the request
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload))
                     .build();
@@ -106,7 +106,7 @@ public class EnrichmentService {
         try {
             List<TdmRequest> requests = new ArrayList<>();
             requests.add(new TdmRequest(userContent));
-            tdmResponse = invoke(serviceUrl, requests);
+            tdmResponse = invoke(serviceUrl, requests, 120);
             return tdmResponse.get(0).toString();
         } catch (Exception e) {
             return e.getMessage();

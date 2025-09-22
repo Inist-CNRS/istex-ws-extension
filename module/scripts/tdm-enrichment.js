@@ -15,6 +15,7 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
     elmts.columnNameLabel.text($.i18n('tdm-enrichment/column-name-label'));
     elmts.serviceUrlLabel.text($.i18n('tdm-enrichment/service-url-label'));
     elmts.batchSizeLabel.text($.i18n('tdm-enrichment/batch-size-label'));
+    elmts.timeoutLabel.text($.i18n('tdm-enrichment/timeout-label'));
 
     elmts.dialogHeader.text($.i18n('tdm-enrichment/dialog-title') + column.name);
     // SEE llm-chatcompletion.js #18
@@ -51,6 +52,7 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
 
         let delay = 1;
         const batchSize = parseInt(elmts.batchSizeInput.val(), 10);
+        const timeout = parseInt(elmts.timeoutInput.val(), 10);
 
         Refine.postProcess(
             "istex-ws-extension",
@@ -63,7 +65,8 @@ TDMEnrichmentDialog.prototype.launch = function (column) {
                 columnInsertIndex: columnIndex + 1,
                 delay: delay,
                 serviceUrl: serviceUrl,
-                batchSize: batchSize
+                batchSize: batchSize,
+                timeout: timeout
             },
             { includeEngine: true, modelsChanged: true, cellsChanged: true, columnStatsChanged: true, rowIdsPreserved: true, recordIdsPreserved: true }
         );
